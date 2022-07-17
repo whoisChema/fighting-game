@@ -123,12 +123,25 @@ class Fighter extends Sprite{
         this.isAttacking = true
     }
 
+    takeHit(){
+        this.switchSprites('takeHit')
+        this.health -= 20
+    }
+
     switchSprites(sprite){
-        if(this.image === this.sprites.attack2.image &&
+        //overwirding all pother animamtion 
+        if (
+            this.image === this.sprites.attack2.image &&
             this.frameCurrent < this.sprites.attack2.framesMax -1 
         )
             return
-        
+        //overwriting when figther gets hit
+        if (
+            this.image === this.sprites.takeHit.image && 
+            this.frameCurrent < this.sprites.takeHit.framesMax - 1
+        )
+            return
+
         switch (sprite) {
             case 'idle':
                 if(this.image !== this.sprites.idle.image){
@@ -164,7 +177,14 @@ class Fighter extends Sprite{
                     this.framesMax = this.sprites.attack2.framesMax
                     this.frameCurrent = 0
                 }
-                break;  
+                break;
+            case 'takeHit':
+                if(this.image !== this.sprites.takeHit.image){
+                    this.image = this.sprites.takeHit.image
+                    this.framesMax = this.sprites.takeHit.framesMax
+                    this.frameCurrent = 0
+                }
+                break;   
             default:
                 break;
         }
